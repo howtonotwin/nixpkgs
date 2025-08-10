@@ -73,6 +73,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/impiaaa/ios-notif-forward";
     license = lib.licenses.mit;
     platforms = lib.platforms.linux;
+    mainProgram = pname;
     maintainers = with lib.maintainers; [ howtonotwin ];
   };
 }
