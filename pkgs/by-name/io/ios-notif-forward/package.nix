@@ -14,14 +14,14 @@
   libappindicator-gtk3,
   xdotool,
 }:
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "ios-notif-forward";
   version = "0.1.1";
 
   src = fetchFromGitHub {
     owner = "impiaaa";
     repo = "ios-notif-forward";
-    tag = "v${version}";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-QF2b5HyJ1Q8U38zgPtDqu8D/DrXlqMGwq0dSNlfaQYo=";
   };
   cargoHash = "sha256-m40166GESlBieAU+GmM2tmIduHTSUw+HlenYY3PR57Q=";
@@ -49,20 +49,20 @@ rustPlatform.buildRustPackage rec {
   # that tries invoke cargo itself. Skip the script and create those files ourselves.
   # (Currently, we only cover Linux.)
   postInstall = ''
-    install -D icon.svg $out/share/icons/hicolor/symbolic/apps/${pname}-symbolic.svg
-    install -D icon.svg $out/share/icons/hicolor/scalable/apps/${pname}.svg
+    install -Dm644 icon.svg $out/share/icons/hicolor/symbolic/apps/ios-notif-forward-symbolic.svg
+    install -Dm644 icon.svg $out/share/icons/hicolor/scalable/apps/ios-notif-forward.svg
   '';
   # Some changes in this file relative to upstream
   desktopItems = [
     (makeDesktopItem {
-      name = pname;
+      name = "ios-notif-forward";
       desktopName = "iOS Notification Forwarder"; # upstream sets Name=ios-notif-forward
-      icon = pname;
+      icon = "ios-notif-forward";
       categories = [ "Utility" ]; # not set upstream
-      exec = pname;
+      exec = "ios-notif-forward";
       terminal = false;
       extraConfig.X-GNOME-UsesNotifications = "true";
-      # Upstream sets Version incorrectly; makeDesktopItem does it correctly
+      # upstream sets Version incorrectly; makeDesktopItem does it correctly
     })
   ];
 
@@ -73,7 +73,7 @@ rustPlatform.buildRustPackage rec {
     homepage = "https://github.com/impiaaa/ios-notif-forward";
     license = lib.licenses.mit;
     platforms = lib.platforms.linux;
-    mainProgram = pname;
+    mainProgram = "ios-notif-forward";
     maintainers = with lib.maintainers; [ howtonotwin ];
   };
-}
+})
