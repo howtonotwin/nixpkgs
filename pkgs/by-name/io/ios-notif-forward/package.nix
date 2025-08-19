@@ -52,17 +52,16 @@ rustPlatform.buildRustPackage (finalAttrs: {
     install -Dm644 icon.svg $out/share/icons/hicolor/symbolic/apps/ios-notif-forward-symbolic.svg
     install -Dm644 icon.svg $out/share/icons/hicolor/scalable/apps/ios-notif-forward.svg
   '';
-  # Some changes in this file relative to upstream
+  # With updates from upstream HEAD
   desktopItems = [
     (makeDesktopItem {
       name = "ios-notif-forward";
-      desktopName = "iOS Notification Forwarder"; # upstream sets Name=ios-notif-forward
+      desktopName = "ios-notif-forward";
       icon = "ios-notif-forward";
-      categories = [ "Utility" ]; # not set upstream
+      categories = [ "Utility" ];
       exec = "ios-notif-forward";
       terminal = false;
       extraConfig.X-GNOME-UsesNotifications = "true";
-      # upstream sets Version incorrectly; makeDesktopItem does it correctly
     })
   ];
 
